@@ -1,0 +1,62 @@
+import serial
+import time
+from tkinter import *
+from tkinter import ttk
+
+def push_button1():
+        connect.write(bytes('H', 'UTF-8'))
+        print("Button 1 pressed")
+
+def push_button2():
+        connect.write(bytes('L', 'UTF-8'))
+        print("Button 2 pressed")
+
+def push_button3():
+        connect.write(bytes('c', 'UTF-8'))
+        print("Button 3 pressed")
+
+def push_button4():
+        connect.write(bytes('d', 'UTF-8'))
+        print("Button 4 pressed")
+
+
+connect = serial.Serial('COM7', 9600)
+print("Reset Arduino")
+time.sleep(3)
+connect.write(bytes('L', 'UTF-8'))
+
+root = Tk()
+
+root.geometry("600x350") #140
+root.title("Platforms control")
+
+start_x=70
+start_y=50
+step=120
+
+button1 = ttk.Button(root, text="Configuration 1", command=push_button1)
+button1.place(x=start_x, y=start_y)
+
+button2 = ttk.Button(root, text="Configuration 2", command=push_button2)
+button2.place(x=start_x + step, y=start_y)
+
+button3 = ttk.Button(root, text="Configuration 3", command=push_button3)
+button3.place(x=start_x + step*2, y=start_y)
+
+button4 = ttk.Button(root, text="Configuration 4", command=push_button4)
+button4.place(x=start_x + step*3, y=start_y)
+
+side = Label(root, text="LeftRight movement").place(x=20, y=140)
+w1 = Scale(root, from_=-30, to=30, tickinterval= 10, orient=HORIZONTAL, length=400, resolution=10)
+w1.set(00)
+w1.place(x=150, y=120)
+
+updown = Label(root, text="UpDown movement").place(x=20, y=210)
+w2 = Scale(root, from_=-30, to=30, tickinterval= 10, orient=HORIZONTAL, length=400, resolution=10)
+w2.set(0)
+w2.place(x=150, y=190)
+
+move = ttk.Button(root, text="MOVE!")
+move.place(x=500, y=270)
+
+root.mainloop()
